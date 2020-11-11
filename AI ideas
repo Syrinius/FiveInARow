@@ -1,0 +1,20 @@
+Basic hierarchy for move priority:
+
+1.Move that wins the game
+    Completing a 5 streak
+2.Move that blocks opponent winning
+    Cutting opponent 4 streak
+3.Moves that set up win next turn
+    Setting up double 4 streak
+4.Moves that block opponent win turn later
+    Cutting tiles that give more than one opponent 4 streak
+5.Offensive or defensive strategy moves chosen randomly
+
+Stuff to implement:
+
+Need to detect streaks for player and AI all the time
+Streaks should not have to be continuous, any configuration of 5 of open and single color tiles is a streak
+Streaks should only count as separate if they have at least 1 different open tile
+Offensive moves should add more instances of the longest streak or make existing longest streak longer
+Defensive moves should cut opponent longest streak
+If possible should give priority to tiles that multiple opponent or own streaks share
