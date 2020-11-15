@@ -20,7 +20,7 @@ public class SettingsScreen extends JPanel {
         playerColorGroup = AddRadioButtonGroup("Player Color", 0, newValue -> Settings.playerColor = newValue,"Black", "White");
         tilesInARowGroup = AddRadioButtonGroup("Tiles in a row to win", Settings.tilesInARowToWin-3, newValue -> { Settings.tilesInARowToWin = newValue+3; Validate(); }, "3", "4", "5");
         warningLabel = AddWarningLabel();
-        startGameButton = AddButton("Start Game!", e -> FiveInARow.startPlaying() );
+        startGameButton = AddButton("Start Game!", e -> GameLogic.SetStage(GameLogic.Stage.PlayingFieldSetup));
 
         setPreferredSize(new Dimension(getPreferredSize().width + 20, getPreferredSize().height + 20));
     }

@@ -4,20 +4,35 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class PlayingField extends JPanel {
-    public MouseListener listener;
 
-    public Color background = new Color(118, 114, 114);
-    public Color lines = new Color(0, 0, 0);
-    public Color blackTransparent = new Color(0,0,0,128);
-    public Color blackOpaque = new Color(0,0,0, 255);
-    public Color whiteTransparent = new Color(255, 255, 255,128);
-    public Color whiteOpaque = new Color(255, 255, 255, 255);
+    MouseListener listener;
+
+    Color background = new Color(118, 114, 114);
+    Color lines = new Color(0, 0, 0);
+    Color blackTransparent = new Color(0,0,0,128);
+    Color blackOpaque = new Color(0,0,0, 255);
+    Color whiteTransparent = new Color(255, 255, 255,128);
+    Color whiteOpaque = new Color(255, 255, 255, 255);
+
+    Color playerTransparent;
 
     public PlayingField() {
         setPreferredSize(new Dimension(Settings.widthInput * Settings.tileSize, Settings.heightInput * Settings.tileSize));
         listener = new MouseListener(this);
+    }
+
+    public void ResetColors() {
+        playerTransparent = Settings.playerColor == 0 ? blackTransparent : whiteTransparent;
+    }
+
+    public void AddListeners() {
         addMouseListener(listener);
         addMouseMotionListener(listener);
+    }
+
+    public void RemoveListeners() {
+        removeMouseListener(listener);
+        removeMouseMotionListener(listener);
     }
 
     class MouseListener implements MouseInputListener {
@@ -42,14 +57,10 @@ public class PlayingField extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            if (e.getButton() != MouseEvent.BUTTON1) return;
             lastX = e.getX();
             lastY = e.getY();
-            if (e.getButton() == MouseEvent.BUTTON1) {
-                GameLogic.grid[lastX/Settings.tileSize][lastY/Settings.tileSize] = GameLogic.PositionType.black;
-            } else {
-                GameLogic.grid[lastX/Settings.tileSize][lastY/Settings.tileSize] = GameLogic.PositionType.white;
-            }
-
+            GameLogic.PlayerMove(lastX/Settings.tileSize, lastY/Settings.tileSize);
         }
 
         @Override
@@ -96,11 +107,11 @@ public class PlayingField extends JPanel {
             }
         }
 
-
-
-        //preview
-        g2.setColor(blackTransparent);
-        g2.fillOval(listener.lastX/Settings.tileSize*Settings.tileSize,listener.lastY/Settings.tileSize*Settings.tileSize,Settings.tileSize,Settings.tileSize);
+        if (GameLogic.GetStage() == GameLogic.Stage.PlayerTurn) {
+            g2.setColor(playerTransparent);
+            g2.fillOval(listener.lastX/Settings.tileSize*Settings.tileSize,
+                        listener.lastY/Settings.tileSize*Settings.tileSize,Settings.tileSize,Settings.tileSize);
+        }
     }
 
     public void clear(Graphics g) {
