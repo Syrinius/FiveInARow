@@ -19,15 +19,15 @@ public class GameEndScreen extends JPanel {
 
     private void Reset(GameLogic.GameResult gameResult) {
         switch (gameResult) {
-            case playerWin -> {
+            case PLAYER_WIN -> {
                 resultDeclarationLabel.setText("Player wins as " + (Settings.playerColor == 0 ? "black" : "white"));
                 encouragingWordsLabel.setText("Congratulations!");
             }
-            case draw -> {
+            case DRAW -> {
                 resultDeclarationLabel.setText("It's a draw");
                 encouragingWordsLabel.setText("Better luck next time!");
             }
-            case aiWin -> {
+            case AI_WIN -> {
                 resultDeclarationLabel.setText("AI wins as " + (Settings.playerColor != 0 ? "black" : "white"));
                 encouragingWordsLabel.setText("Better luck next time!");
             }
@@ -38,8 +38,8 @@ public class GameEndScreen extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         resultDeclarationLabel = AddLabel("                     ");
         encouragingWordsLabel = AddLabel("                      ");
-        playAgainButton = AddButton("Play Again", e -> GameLogic.SetStage(GameLogic.Stage.PlayingFieldSetup));
-        changeSettingsButton = AddButton("Change Settings", e -> GameLogic.SetStage(GameLogic.Stage.SettingsScreen));
+        playAgainButton = AddButton("Play Again", e -> GameLogic.SetStage(GameLogic.Stage.PLAYING_FIELD_SETUP));
+        changeSettingsButton = AddButton("Change Settings", e -> GameLogic.SetStage(GameLogic.Stage.SETTINGS_SCREEN));
     }
 
     JButton AddButton(String name, ActionListener listener){

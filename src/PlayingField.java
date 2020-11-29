@@ -21,7 +21,8 @@ public class PlayingField extends JPanel {
         listener = new MouseListener(this);
     }
 
-    public void ResetColors() {
+    public void Reset() {
+        setPreferredSize(new Dimension(Settings.widthInput * Settings.tileSize, Settings.heightInput * Settings.tileSize));
         playerTransparent = Settings.playerColor == 0 ? blackTransparent : whiteTransparent;
     }
 
@@ -90,24 +91,24 @@ public class PlayingField extends JPanel {
         }
 
         //render positions
-        for(int i = 0; i < GameLogic.grid.length; i++) {
-            for(int j = 0; j < GameLogic.grid[i].length; j++) {
-                switch (GameLogic.grid[i][j]) {
-                    case black:
+        for(int i = 0; i < Position.grid.length; i++) {
+            for(int j = 0; j < Position.grid[i].length; j++) {
+                switch (Position.grid[i][j].tileColor) {
+                    case BLACK:
                         g2.setColor(blackOpaque);
                         g2.fillOval(i*Settings.tileSize,j*Settings.tileSize,Settings.tileSize,Settings.tileSize);
                         break;
-                    case white:
+                    case WHITE:
                         g2.setColor(whiteOpaque);
                         g2.fillOval(i*Settings.tileSize,j*Settings.tileSize,Settings.tileSize,Settings.tileSize);
                         break;
-                    case empty:
+                    case EMPTY:
                         break;
                 }
             }
         }
 
-        if (GameLogic.GetStage() == GameLogic.Stage.PlayerTurn) {
+        if (GameLogic.GetStage() == GameLogic.Stage.PLAYER_TURN) {
             g2.setColor(playerTransparent);
             g2.fillOval(listener.lastX/Settings.tileSize*Settings.tileSize,
                         listener.lastY/Settings.tileSize*Settings.tileSize,Settings.tileSize,Settings.tileSize);

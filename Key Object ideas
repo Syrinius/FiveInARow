@@ -1,0 +1,22 @@
+BattleField
+Battlefields stored in 4 lists, each describing a direction
+Key: a short representing position on the board, determined by the direction of its list
+
+Values
+Color: Enum, White, Black, Draw, Draw = irrelevant to game
+Priority-Length: Numeric value, a byte, Length*2  +1 if AI color
+
+Position
+Positions stored as a 2D array
+Values
+Color: Enum, White, Black, Empty
+Priority
+
+Adding pieces to the board
+1. empty position gets removed
+2. create battlefields
+	a. check if battlefield x exists
+	b. tell empty positions in battlefield x that it has been created
+	c. empty positions invalidate themselves
+3. tell all invalidated empty positions to recalculate their priority levels
+4. Priority empty position set to be highest priority empty position during iteration
